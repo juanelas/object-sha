@@ -1,6 +1,6 @@
 {
   "name": "object-sha",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "A package to perform SHA hash funcrions over arbitrary objects. It creates an array of the obejct values ordered by the object keys, the stringify it and then hash it. The output is given in a hexadecimal string",
   "keywords": [
     "hash",
@@ -18,7 +18,7 @@
     "email": "j.hernandez@upc.edu",
     "url": "https://github.com/juanelas"
   },
-  "repository": "github:juanelas/my-package-name",
+  "repository": "github:juanelas/object-sha",
   "main": "./lib/index.node.js",
   "browser": "./lib/index.browser.mod.js",
   "types": "./types/index.d.ts",
