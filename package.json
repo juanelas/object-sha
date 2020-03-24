@@ -1,0 +1,54 @@
+{
+  "name": "object-sha",
+  "version": "0.9.0",
+  "description": "A package to perform SHA hash funcrions over arbitrary objects. It creates an array of the obejct values ordered by the object keys, the stringify it and then hash it. The output is given in a hexadecimal string",
+  "keywords": [
+    "hash",
+    "object",
+    "sha",
+    "sha1",
+    "sha2",
+    "sha256",
+    "sha384",
+    "sha512"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Juan Hernández Serrano",
+    "email": "j.hernandez@upc.edu",
+    "url": "https://github.com/juanelas"
+  },
+  "repository": "github:juanelas/my-package-name",
+  "main": "./lib/index.node.js",
+  "browser": "./lib/index.browser.mod.js",
+  "types": "./types/index.d.ts",
+  "directories": {
+    "build": "./build",
+    "lib": "./lib",
+    "src": "./src",
+    "test": "./test",
+    "types": "./types"
+  },
+  "scripts": {
+    "test": "mocha",
+    "build:js": "rollup -c build/rollup.config.js",
+    "build:browserTests": "rollup -c build/rollup.tests.config.js",
+    "build:docs": "jsdoc2md --template=./src/doc/readme-template.md --files ./src/js/index.js > README.md",
+    "build:dts": "node build/build.dts.js",
+    "build": "run-s build:**",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "",
+    "@rollup/plugin-multi-entry": "",
+    "@rollup/plugin-node-resolve": "",
+    "@rollup/plugin-replace": "",
+    "chai": "",
+    "jsdoc-to-markdown": "",
+    "mocha": "",
+    "npm-run-all": "",
+    "rollup": "",
+    "rollup-plugin-terser": "",
+    "typescript": ""
+  }
+}
