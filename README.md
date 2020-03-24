@@ -7,6 +7,12 @@ It provides a single method `digest()` that first creates an array of the object
 Internally the hash is computed using node crypto (node.js) or subtle crypto (browsers).
 In order to guarantee native compatibility with browsers, the supported hash algorithms are `SHA-1`, `SHA-256`, `SHA-384` and `SHA-512`.
 
+## Installation
+
+```bash
+npm install object-sha
+```
+
 # JS Doc
 
 <a name="digest"></a>
