@@ -1,4 +1,4 @@
-# object-hash
+# object-sha
 
 A package to perform SHA hash functions over key-value objects that works both in Node.js and native JS. It also can be used with typescript projects.
 
