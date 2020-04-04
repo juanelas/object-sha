@@ -1,4 +1,3 @@
-// Use ES6 module syntax
 import hashable from './hashable'
 export { default as hashable } from './hashable'
 
