@@ -2,13 +2,13 @@
 
 # object-sha
 
-A package to compute the SHA hash of a JS Object. It works in Node.js and native JS and be directly imported into TypeScript projects.
+A package to compute the SHA hash of a JS Object. It works in Node.js and native JS and can be directly imported into TypeScript projects (types  provided).
 
-It provides two methods `hashable(obj)` and `digest(obj)` (see [JS Doc](#js-doc) below):
+It includes two methods `hashable(obj)` and `digest(obj)` (see [JS Doc](#js-doc) below):
 
-- `hashable(obj)` prepares any object with no known order to be hashable. It recursively traverses the input to find `Object`s. Then every `Object` is converted to an array sorted by key of 2-arrays [key, value]. The final result is JSON.stringify-ed and returned as a string. Since a specific order is now guranteed, we can safely use the output as the input for any hash algorithm.
+- `hashable(obj)` prepares any object with no known order to be hashable. It recursively traverses the input to find `Object`s. Then every `Object` is converted to an array sorted by key of 2-arrays [key, value]. The final result is JSON.stringify-ed and returned as a string. Since a specific order is now guaranteed, we can safely use the output as the input for any hash algorithm.
 
-- `digest(obj, [algorithm])` performs a SHA-2 hash to the input obj, wich is first made hashable with `hashable(obj)`. The output is a string with the hexadecimal representation of the digest. Internally the hash is computed using node crypto (node.js) or subtle crypto (browsers). Supported hash algorithms are `SHA-1`, `SHA-256`, `SHA-384` and `SHA-512`.
+- `digest(obj, [algorithm])` performs an SHA-2 hash to the input obj, which is first made hashable with `hashable(obj)`. The output is a string with the hexadecimal representation of the digest. Internally the hash is computed using node crypto (node.js) or subtle crypto (browsers). Supported hash algorithms are `SHA-1`, `SHA-256`, `SHA-384` and `SHA-512`.
 
 ## Installation
 
