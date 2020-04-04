@@ -53,20 +53,17 @@
     ]
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "",
-    "@rollup/plugin-multi-entry": "",
-    "@rollup/plugin-node-resolve": "",
-    "@rollup/plugin-replace": "",
-    "chai": "",
-    "jsdoc-to-markdown": "",
-    "mocha": "",
-    "npm-run-all": "",
-    "rollup": "",
-    "rollup-plugin-terser": "",
-    "standard": "",
-    "typescript": ""
-  },
-  "dependencies": {
-    "rollup": "^2.3.2"
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-multi-entry": "^3.0.0",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-replace": "^2.3.1",
+    "chai": "^4.2.0",
+    "jsdoc-to-markdown": "^5.0.3",
+    "mocha": "^7.1.1",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.3.2",
+    "rollup-plugin-terser": "^5.3.0",
+    "standard": "^14.3.3",
+    "typescript": "^3.8.3"
   }
 }
