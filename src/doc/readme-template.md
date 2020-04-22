@@ -4,9 +4,9 @@
 
 # {{PKG_NAME}}
 
-A package to compute the SHA hash of a JS Object. It works in Node.js and native JS and can be directly imported into TypeScript projects (types  provided).
+A package to compute the SHA hash of a JS Object. It works in Node.js and native JS and can be directly imported into TypeScript projects (types provided).
 
-It includes two methods `hashable(obj)` and `digest(obj)` (see [JS Doc](#js-doc) below):
+It includes two methods `hashable(obj)` and `digest(obj)` (see [API Ref Doc](#api-reference-documentation) below):
 
 - `hashable(obj)` prepares any object with no known order to be hashable. It recursively traverses the input to find `Object`s. Then every `Object` is converted to an array sorted by key of 2-arrays [key, value]. The final result is JSON.stringify-ed and returned as a string. Since a specific order is now guaranteed, we can safely use the output as the input for any hash algorithm.
 
