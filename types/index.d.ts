@@ -6,6 +6,8 @@
  * @param {Object} obj - An Object
  * @param {string} [algorithm = SHA-256] - For compatibility with browsers it should be 'SHA-1', 'SHA-256', 'SHA-384' and 'SHA-512'.
  *
+ * @throws {RangeError} Invalid hash algorithm
+ *
  * @returns {Promise<string>} A promise that resolves to a string with hexadecimal content.
  */
 export function digest(obj: any, algorithm?: string): Promise<string>;

@@ -1,3 +1,6 @@
+# Project specific files
+example.js
+
 # Logs
 logs
 *.log
@@ -11,3 +14,10 @@ node_modules/
 
 # Visual Studio Code
 .vscode
+
+# IntelliJ
+.idea
+
+# MYC output
+.nyc_output
+coverage/*

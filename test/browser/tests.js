@@ -63,7 +63,12 @@ describe('testing function hashObject()', function () {
         });
       });
     }
-  }});
+  }  describe('testing with invalid hash algorithm', function () {
+    it('should throw RangeError', function () {
+      chai.expect(() => _pkg.digest(inputs.valuesEqual[0].obj1, 'MD5')).to.throw(RangeError);
+    });
+  });
+});
 
 describe('testing function digest()', function () {
   for (const algorithm of inputs.algorithms) {
