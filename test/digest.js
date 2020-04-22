@@ -72,7 +72,7 @@ describe('testing function digest()', function () {
             ret1 = await _pkg.digest(value.obj1)
             ret2 = await _pkg.digest(value.obj2)
           }
-          console.log(`${ret1} === ${ret2}`)
+          console.log(`${ret1} !== ${ret2}`)
           chai.expect(ret1).to.not.equal(ret2)
         })
       })

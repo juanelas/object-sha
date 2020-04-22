@@ -38,16 +38,22 @@ const inputs = {
       obj2: { dst: 'B', src: 'A', msg: { hello: 'hello!', goodbye: 'goodbye!' } }
     }
   ],
-  algorithms: ['SHA-1', 'SHA-256', 'SHA-384', 'SHA-512']
+  algorithms: ['SHA-1', 'SHA-256', 'SHA-384', 'SHA-512', 'default']
 };
 
-describe('testing function hashObject()', function () {
+describe('testing function digest()', function () {
   for (const algorithm of inputs.algorithms) {
     for (const value of inputs.valuesEqual) {
       describe(`digest(${JSON.stringify(value.obj1)}, ${algorithm}) === digest(${JSON.stringify(value.obj2)}, ${algorithm})`, function () {
         it('should be the same', async function () {
-          const ret1 = await _pkg.digest(value.obj1, algorithm); // always call you package as _pkg
-          const ret2 = await _pkg.digest(value.obj2, algorithm); // always call you package as _pkg
+          let ret1, ret2;
+          if (algorithm !== 'default') {
+            ret1 = await _pkg.digest(value.obj1, algorithm);
+            ret2 = await _pkg.digest(value.obj2, algorithm);
+          } else {
+            ret1 = await _pkg.digest(value.obj1);
+            ret2 = await _pkg.digest(value.obj2);
+          }
           console.log(`${ret1} === ${ret2}`);
           chai.expect(ret1).to.equal(ret2);
         });
@@ -56,9 +62,15 @@ describe('testing function hashObject()', function () {
     for (const value of inputs.valuesDifferent) {
       describe(`digest(${JSON.stringify(value.obj1)}, ${algorithm}) === digest(${JSON.stringify(value.obj2)}, ${algorithm})`, function () {
         it('should be different', async function () {
-          const ret1 = await _pkg.digest(value.obj1, algorithm); // always call you package as _pkg
-          const ret2 = await _pkg.digest(value.obj2, algorithm); // always call you package as _pkg
-          console.log(`${ret1} === ${ret2}`);
+          let ret1, ret2;
+          if (algorithm !== 'default') {
+            ret1 = await _pkg.digest(value.obj1, algorithm);
+            ret2 = await _pkg.digest(value.obj2, algorithm);
+          } else {
+            ret1 = await _pkg.digest(value.obj1);
+            ret2 = await _pkg.digest(value.obj2);
+          }
+          console.log(`${ret1} !== ${ret2}`);
           chai.expect(ret1).to.not.equal(ret2);
         });
       });
@@ -69,27 +81,3 @@ describe('testing function hashObject()', function () {
     });
   });
 });
-
-describe('testing function digest()', function () {
-  for (const algorithm of inputs.algorithms) {
-    for (const value of inputs.valuesEqual) {
-      describe(`digest(${JSON.stringify(value.obj1)}, ${algorithm}) === digest(${JSON.stringify(value.obj2)}, ${algorithm})`, function () {
-        it('should be the same', async function () {
-          const ret1 = await _pkg.digest(value.obj1, algorithm); // always call you package as _pkg
-          const ret2 = await _pkg.digest(value.obj2, algorithm); // always call you package as _pkg
-          console.log(`${ret1} === ${ret2}`);
-          chai.expect(ret1).to.equal(ret2);
-        });
-      });
-    }
-    for (const value of inputs.valuesDifferent) {
-      describe(`digest(${JSON.stringify(value.obj1)}, ${algorithm}) === digest(${JSON.stringify(value.obj2)}, ${algorithm})`, function () {
-        it('should be different', async function () {
-          const ret1 = await _pkg.digest(value.obj1, algorithm); // always call you package as _pkg
-          const ret2 = await _pkg.digest(value.obj2, algorithm); // always call you package as _pkg
-          console.log(`${ret1} === ${ret2}`);
-          chai.expect(ret1).to.not.equal(ret2);
-        });
-      });
-    }
-  }});
