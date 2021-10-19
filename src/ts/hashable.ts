@@ -1,8 +1,8 @@
-function isObject (val) {
+function isObject (val: any): boolean {
   return (val != null) && (typeof val === 'object') && !(Array.isArray(val))
 }
 
-function objectToArraySortedByKey (obj) {
+function objectToArraySortedByKey (obj: any): any {
   if (!isObject(obj) && !Array.isArray(obj)) {
     return obj
   }
@@ -15,7 +15,7 @@ function objectToArraySortedByKey (obj) {
     })
   }
   // if it is an object convert to array and sort
-  return Object.keys(obj)
+  return Object.keys(obj) // eslint-disable-line
     .sort()
     .map((key) => {
       return [key, objectToArraySortedByKey(obj[key])]
@@ -29,6 +29,6 @@ function objectToArraySortedByKey (obj) {
  *
  * @returns {string} a JSON stringify of the created sorted array
  */
-export default function (obj) {
+export default function (obj: object): string {
   return JSON.stringify(objectToArraySortedByKey(obj))
 }

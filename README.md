@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-![Node CI](https://github.com/juanelas/object-sha/workflows/Node%20CI/badge.svg)
+[![Node.js CI](https://github.com/juanelas/object-sha/workflows/Node.js%20CI/badge.svg)](https://github.com/juanelas/object-sha/actions?query=workflow%3A%22Node.js+CI%22)
 [![Coverage Status](https://coveralls.io/repos/github/juanelas/object-sha/badge.svg?branch=master)](https://coveralls.io/github/juanelas/object-sha?branch=master)
 
 # object-sha
@@ -13,48 +13,29 @@ It includes two methods `hashable(obj)` and `digest(obj)` (see [API Ref Doc](#ap
 
 - `digest(obj, [algorithm])` performs an SHA-2 hash to the input obj, which is first made hashable with `hashable(obj)`. The output is a string with the hexadecimal representation of the digest. Internally the hash is computed using node crypto (node.js) or subtle crypto (browsers). Supported hash algorithms are `SHA-1`, `SHA-256`, `SHA-384` and `SHA-512`.
 
-## Installation
+## Usage
 
-```terminal
+`object-sha` can be imported to your project with `npm`:
+
+```console
 npm install object-sha
 ```
 
-NPM installation defaults to the ES6 module for browsers and the CJS one for Node.js. For web browsers, you can also directly download the [IIFE bundle](https://raw.githubusercontent.com/juanelas/object-sha/master/lib/index.browser.bundle.iife.js) or the [ESM bundle](https://raw.githubusercontent.com/juanelas/object-sha/master/lib/index.browser.bundle.mod.js) from the repository.
+Then either require (Node.js CJS):
 
-## Usage examples
+```javascript
+const objectSha = require('object-sha')
+```
 
-Import your module as :
+or import (JavaScript ES module):
 
- - Node.js
-   ```javascript
-   const objectSha = require('object-sha')
-   ... // your code here
-   ```
- - JavaScript native or TypeScript project (including React and Angular)
-   ```javascript
-   import * as objectSha from 'object-sha'
-   ... // your code here
-   ```
- - JavaScript native browser ES module
-   ```html
-   <script type="module">
-      import * as objectSha from 'lib/index.browser.bundle.mod.js'  // Use you actual path to the broser mod bundle
-      ... // your code here
-    </script>
-   ```
- - JavaScript native browser IIFE
-   ```html
-   <head>
-     ...
-     <script src="../../lib/index.browser.bundle.iife.js"></script> <!-- Use you actual path to the browser bundle -->
-   </head>
-   <body>
-     ...
-     <script>
-       ... // your code here
-     </script>
-   </body>
-   ```
+```javascript
+import * as objectSha from 'object-sha'
+```
+
+The appropriate version for browser or node is automatically exported.
+
+You can also download the [IIFE bundle](https://raw.githubusercontent.com/juanelas/object-sha/master/dist/bundles/iife.js), the [ESM bundle](https://raw.githubusercontent.com/juanelas/object-sha/master/dist/bundles/esm.min.js) or the [UMD bundle](https://raw.githubusercontent.com/juanelas/object-sha/master/dist/bundles/umd.js) and manually add it to your project, or, if you have already installed `object-sha` in your project, just get the bundles from `node_modules/object-sha/dist/bundles/`.
 
 An example of usage could be:
 
@@ -77,34 +58,4 @@ objectSha.digest(obj2, 'SHA-512').then(console.log) // f3325ec4c42cc0154c6a9c784
 
 ## API reference documentation
 
-<a name="digest"></a>
-
-### digest(obj, [algorithm]) ⇒ <code>Promise.&lt;string&gt;</code>
-Returns a string with a hexadecimal representation of the digest of the input object using a given hash algorithm.
-It first creates an array of the object values ordered by the object keys (using hashable(obj));
-then, it JSON.stringify-es it; and finally it hashes it.
-
-**Kind**: global function  
-**Returns**: <code>Promise.&lt;string&gt;</code> - A promise that resolves to a string with hexadecimal content.  
-**Throws**:
-
-- <code>RangeError</code> Invalid hash algorithm
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| obj | <code>Object</code> |  | An Object |
-| [algorithm] | <code>string</code> | <code>&quot;SHA-256&quot;</code> | For compatibility with browsers it should be 'SHA-1', 'SHA-256', 'SHA-384' and 'SHA-512'. |
-
-<a name="hashable"></a>
-
-### hashable(obj) ⇒ <code>string</code>
-If the input object is not an Array, this function converts the object to an array, all the key-values to 2-arrays [key, value] and then sort the array by the keys. All the process is done recursively so objects inside objects or arrays are also ordered. Once the array is created the method returns the JSON.stringify() of the sorted array.
-
-**Kind**: global function  
-**Returns**: <code>string</code> - a JSON stringify of the created sorted array  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| obj | <code>object</code> | the object |
-
+[Check the API](./docs/API.md)

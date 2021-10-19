@@ -12,48 +12,29 @@ It includes two methods `hashable(obj)` and `digest(obj)` (see [API Ref Doc](#ap
 
 - `digest(obj, [algorithm])` performs an SHA-2 hash to the input obj, which is first made hashable with `hashable(obj)`. The output is a string with the hexadecimal representation of the digest. Internally the hash is computed using node crypto (node.js) or subtle crypto (browsers). Supported hash algorithms are `SHA-1`, `SHA-256`, `SHA-384` and `SHA-512`.
 
-## Installation
+## Usage
 
-```terminal
+`{{PKG_NAME}}` can be imported to your project with `npm`:
+
+```console
 npm install {{PKG_NAME}}
 ```
 
-NPM installation defaults to the ES6 module for browsers and the CJS one for Node.js. For web browsers, you can also directly download the {{IIFE_BUNDLE}} or the {{ESM_BUNDLE}} from the repository.
+Then either require (Node.js CJS):
 
-## Usage examples
+```javascript
+const {{PKG_CAMELCASE}} = require('{{PKG_NAME}}')
+```
 
-Import your module as :
+or import (JavaScript ES module):
 
- - Node.js
-   ```javascript
-   const {{PKG_CAMELCASE}} = require('{{PKG_NAME}}')
-   ... // your code here
-   ```
- - JavaScript native or TypeScript project (including React and Angular)
-   ```javascript
-   import * as {{PKG_CAMELCASE}} from '{{PKG_NAME}}'
-   ... // your code here
-   ```
- - JavaScript native browser ES module
-   ```html
-   <script type="module">
-      import * as {{PKG_CAMELCASE}} from 'lib/index.browser.bundle.mod.js'  // Use you actual path to the broser mod bundle
-      ... // your code here
-    </script>
-   ```
- - JavaScript native browser IIFE
-   ```html
-   <head>
-     ...
-     <script src="../../lib/index.browser.bundle.iife.js"></script> <!-- Use you actual path to the browser bundle -->
-   </head>
-   <body>
-     ...
-     <script>
-       ... // your code here
-     </script>
-   </body>
-   ```
+```javascript
+import * as {{PKG_CAMELCASE}} from '{{PKG_NAME}}'
+```
+
+The appropriate version for browser or node is automatically exported.
+
+You can also download the {{IIFE_BUNDLE}}, the {{ESM_BUNDLE}} or the {{UMD_BUNDLE}} and manually add it to your project, or, if you have already installed `{{PKG_NAME}}` in your project, just get the bundles from `node_modules/{{PKG_NAME}}/dist/bundles/`.
 
 An example of usage could be:
 
@@ -76,4 +57,4 @@ objectSha.digest(obj2, 'SHA-512').then(console.log) // f3325ec4c42cc0154c6a9c784
 
 ## API reference documentation
 
-{{>main}}
+[Check the API](./docs/API.md)
