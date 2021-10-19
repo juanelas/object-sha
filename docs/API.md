@@ -1,4 +1,4 @@
-# object-sha - v2.0.5
+# object-sha - v2.0.6
 
 My module description. Please update with your module data.
 
@@ -40,7 +40,7 @@ a promise that resolves to a string with hexadecimal content.
 
 #### Defined in
 
-index.ts:26
+[index.ts:26](https://github.com/juanelas/object-sha/blob/fbaad71/src/ts/index.ts#L26)
 
 ___
 
@@ -64,4 +64,4 @@ a JSON stringify of the created sorted array
 
 #### Defined in
 
-hashable.ts:32
+[hashable.ts:32](https://github.com/juanelas/object-sha/blob/fbaad71/src/ts/hashable.ts#L32)
