@@ -2,7 +2,8 @@
 
 My module description. Please update with your module data.
 
-**`remarks`**
+**`Remarks`**
+
 This module runs perfectly in node.js and browsers
 
 ## Table of contents
@@ -22,7 +23,8 @@ Returns a string with a hexadecimal representation of the digest of the input ob
 It first creates an array of the object values ordered by the object keys (using hashable(obj));
 then, it JSON.stringify-es it; and finally it hashes it.
 
-**`throws`** {RangeError}
+**`Throws`**
+
 Thrown if an invalid hash algorithm is selected.
 
 #### Parameters
@@ -40,7 +42,7 @@ a promise that resolves to a string with hexadecimal content.
 
 #### Defined in
 
-[index.ts:26](https://github.com/juanelas/object-sha/blob/fbaad71/src/ts/index.ts#L26)
+index.ts:26
 
 ___
 
@@ -54,7 +56,7 @@ If the input object is not an Array, this function converts the object to an arr
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `obj` | `object` | the object |
+| `obj` | `string` \| `number` \| `object` | the object |
 
 #### Returns
 
@@ -64,4 +66,4 @@ a JSON stringify of the created sorted array
 
 #### Defined in
 
-[hashable.ts:32](https://github.com/juanelas/object-sha/blob/fbaad71/src/ts/hashable.ts#L32)
+hashable.ts:32

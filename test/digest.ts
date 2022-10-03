@@ -1,3 +1,5 @@
+import * as objectSha from '#pkg'
+
 describe('testing function digest()', function () {
   const inputs = {
     valuesEqual: [
@@ -41,13 +43,13 @@ describe('testing function digest()', function () {
         it('should be the same', async function () {
           let ret1, ret2
           if (algorithm !== 'default') {
-            ret1 = await _pkg.digest(value.obj1, algorithm)
-            ret2 = await _pkg.digest(value.obj2, algorithm)
+            ret1 = await objectSha.digest(value.obj1, algorithm)
+            ret2 = await objectSha.digest(value.obj2, algorithm)
           } else {
-            ret1 = await _pkg.digest(value.obj1)
-            ret2 = await _pkg.digest(value.obj2)
+            ret1 = await objectSha.digest(value.obj1)
+            ret2 = await objectSha.digest(value.obj2)
           }
-          console.log(`${ret1} === ${ret2}`)
+          // console.log(`${ret1} === ${ret2}`)
           chai.expect(ret1).to.equal(ret2)
         })
       })
@@ -57,13 +59,13 @@ describe('testing function digest()', function () {
         it('should be different', async function () {
           let ret1, ret2
           if (algorithm !== 'default') {
-            ret1 = await _pkg.digest(value.obj1, algorithm)
-            ret2 = await _pkg.digest(value.obj2, algorithm)
+            ret1 = await objectSha.digest(value.obj1, algorithm)
+            ret2 = await objectSha.digest(value.obj2, algorithm)
           } else {
-            ret1 = await _pkg.digest(value.obj1)
-            ret2 = await _pkg.digest(value.obj2)
+            ret1 = await objectSha.digest(value.obj1)
+            ret2 = await objectSha.digest(value.obj2)
           }
-          console.log(`${ret1} !== ${ret2}`)
+          // console.log(`${ret1} !== ${ret2}`)
           chai.expect(ret1).to.not.equal(ret2)
         })
       })
@@ -73,7 +75,7 @@ describe('testing function digest()', function () {
   describe('testing with invalid hash algorithm', function () {
     it('should throw RangeError', function () {
       // eslint-disable-next-line
-      chai.expect(() => _pkg.digest(inputs.valuesEqual[0].obj1, 'MD5')).to.throw(RangeError)
+      chai.expect(() => objectSha.digest(inputs.valuesEqual[0].obj1, 'MD5')).to.throw(RangeError)
     })
   })
 })

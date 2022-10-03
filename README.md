@@ -1,7 +1,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Node.js CI](https://github.com/juanelas/object-sha/workflows/Node.js%20CI/badge.svg)](https://github.com/juanelas/object-sha/actions?query=workflow%3A%22Node.js+CI%22)
-[![Coverage Status](https://coveralls.io/repos/github/juanelas/object-sha/badge.svg?branch=master)](https://coveralls.io/github/juanelas/object-sha?branch=master)
+[![Node.js CI](https://github.com/juanelas/object-sha/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/juanelas/object-sha/actions/workflows/build-and-test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/juanelas/object-sha/badge.svg?branch=main)](https://coveralls.io/github/juanelas/object-sha?branch=main)
 
 # object-sha
 
@@ -35,11 +36,11 @@ import * as objectSha from 'object-sha'
 
 The appropriate version for browser or node is automatically exported.
 
-You can also download the [IIFE bundle](https://raw.githubusercontent.com/juanelas/object-sha/master/dist/bundles/iife.js), the [ESM bundle](https://raw.githubusercontent.com/juanelas/object-sha/master/dist/bundles/esm.min.js) or the [UMD bundle](https://raw.githubusercontent.com/juanelas/object-sha/master/dist/bundles/umd.js) and manually add it to your project, or, if you have already installed `object-sha` in your project, just get the bundles from `node_modules/object-sha/dist/bundles/`.
+You can also download the [IIFE bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundles/iife.js), the [ESM bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundles/esm.min.js) or the [UMD bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundles/umd.js) and manually add it to your project, or, if you have already installed `object-sha` in your project, just get the bundles from `node_modules/object-sha/dist/bundles/`.
 
 An example of usage could be:
 
-```javascript
+```typescript
 const objectSha = require('object-sha') // or import * as objectSha from 'object-sha'
 
 const obj1 = { src: 'A', dst: 'B', msg: { hello: 'goodbye!', arr: [2, 9, { b: 5, a: 7 }] } }

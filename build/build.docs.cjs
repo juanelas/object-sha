@@ -3,7 +3,9 @@
 const fs = require('fs')
 const TypeDoc = require('typedoc')
 const path = require('path')
+const json5 = require('json5')
 const pkgJson = require('../package.json')
+const rimraf = require('rimraf')
 
 const rootDir = path.join(__dirname, '..')
 
@@ -14,8 +16,17 @@ function camelise (str) {
     })
 }
 
+const tsConfigPath = path.join(rootDir, 'tsconfig.json')
+const tempTsConfigPath = path.join(rootDir, '.tsconfig.json')
+
 async function typedoc () {
   const app = new TypeDoc.Application()
+
+  // prepare tsconfig
+  const tsConfig = json5.parse(fs.readFileSync(tsConfigPath, 'utf8'))
+  tsConfig.include = ['src/ts/**/*', 'build/typings/**/*.d.ts']
+  tsConfig.exclude = ['src/**/*.spec.ts']
+  fs.writeFileSync(tempTsConfigPath, JSON.stringify(tsConfig, undefined, 2))
 
   // If you want TypeDoc to load tsconfig.json / typedoc.json files
   app.options.addReader(new TypeDoc.TSConfigReader())
@@ -23,12 +34,14 @@ async function typedoc () {
 
   app.bootstrap({
     // typedoc options here
+    tsconfig: tempTsConfigPath,
     entryPoints: ['src/ts/index.ts'],
     plugin: ['typedoc-plugin-markdown'],
     includeVersion: true,
     entryDocument: 'API.md',
     readme: 'none',
-    hideBreadcrumbs: true
+    hideBreadcrumbs: true,
+    excludePrivate: true
   })
 
   const project = app.convert()
@@ -53,6 +66,16 @@ function getRepositoryData () {
         repoName: repodata.slice(2).join('/')
       }
     } else return null
+  } else {
+    if (pkgJson.repository.url !== 'undefined') {
+      const regex = /(?:.+?\+)?http[s]?:\/\/(?<repoProvider>[\w._-]+)\.\w{2,3}\/(?<repoUsername>[\w._-]+)\/(?<repoName>[\w._\-/]+?)\.git/
+      const match = pkgJson.repository.url.match(regex)
+      return {
+        repoProvider: match[1],
+        repoUsername: match[2],
+        repoName: match[3]
+      }
+    }
   }
 }
 
@@ -70,17 +93,17 @@ let iifeBundle, esmBundle, umdBundle, workflowBadget, coverallsBadge
 if (repoProvider) {
   switch (repoProvider) {
     case 'github':
-      iifeBundle = `[IIFE bundle](https://raw.githubusercontent.com/${repoUsername}/${repoName}/master/${iifeBundlePath})`
-      esmBundle = `[ESM bundle](https://raw.githubusercontent.com/${repoUsername}/${repoName}/master/${esmBundlePath})`
-      umdBundle = `[UMD bundle](https://raw.githubusercontent.com/${repoUsername}/${repoName}/master/${umdBundlePath})`
-      workflowBadget = `[![Node.js CI](https://github.com/${repoUsername}/${repoName}/workflows/Node.js%20CI/badge.svg)](https://github.com/${repoUsername}/${repoName}/actions?query=workflow%3A%22Node.js+CI%22)`
-      coverallsBadge = `[![Coverage Status](https://coveralls.io/repos/github/${repoUsername}/${repoName}/badge.svg?branch=master)](https://coveralls.io/github/${repoUsername}/${repoName}?branch=master)`
+      iifeBundle = `[IIFE bundle](https://raw.githubusercontent.com/${repoUsername}/${repoName}/main/${iifeBundlePath})`
+      esmBundle = `[ESM bundle](https://raw.githubusercontent.com/${repoUsername}/${repoName}/main/${esmBundlePath})`
+      umdBundle = `[UMD bundle](https://raw.githubusercontent.com/${repoUsername}/${repoName}/main/${umdBundlePath})`
+      workflowBadget = `[![Node.js CI](https://github.com/${repoUsername}/${repoName}/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/${repoUsername}/${repoName}/actions/workflows/build-and-test.yml)`
+      coverallsBadge = `[![Coverage Status](https://coveralls.io/repos/github/${repoUsername}/${repoName}/badge.svg?branch=main)](https://coveralls.io/github/${repoUsername}/${repoName}?branch=main)`
       break
 
     case 'gitlab':
-      iifeBundle = `[IIFE bundle](https://gitlab.com/${repoUsername}/${repoName}/-/raw/master/dist/${iifeBundlePath}?inline=false)`
-      esmBundle = `[ESM bundle](https://gitlab.com/${repoUsername}/${repoName}/-/raw/master/dist/${esmBundlePath}?inline=false)`
-      umdBundle = `[UMD bundle](https://gitlab.com/${repoUsername}/${repoName}/-/raw/master/dist/${umdBundlePath}?inline=false)`
+      iifeBundle = `[IIFE bundle](https://gitlab.com/${repoUsername}/${repoName}/-/raw/master/${iifeBundlePath}?inline=false)`
+      esmBundle = `[ESM bundle](https://gitlab.com/${repoUsername}/${repoName}/-/raw/master/${esmBundlePath}?inline=false)`
+      umdBundle = `[UMD bundle](https://gitlab.com/${repoUsername}/${repoName}/-/raw/master/${umdBundlePath}?inline=false)`
       break
 
     default:
@@ -106,3 +129,5 @@ const readmeFile = path.join(rootDir, 'README.md')
 fs.writeFileSync(readmeFile, template)
 
 typedoc()
+
+rimraf.sync(tempTsConfigPath)

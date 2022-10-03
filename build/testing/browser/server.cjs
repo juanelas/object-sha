@@ -4,13 +4,16 @@ const fs = require('fs')
 const http = require('http')
 const path = require('path')
 const pkgJson = require('../../../package.json')
+require('dotenv').config()
 
 const rollup = require('rollup')
 const resolve = require('@rollup/plugin-node-resolve').nodeResolve
 const replace = require('@rollup/plugin-replace')
 const multi = require('@rollup/plugin-multi-entry')
-const typescript = require('@rollup/plugin-typescript')
+const typescriptPlugin = require('@rollup/plugin-typescript')
 const commonjs = require('@rollup/plugin-commonjs')
+const json = require('@rollup/plugin-json')
+const runScript = require('../../run-script.cjs')
 
 const rootDir = path.join(__dirname, '..', '..', '..')
 
@@ -39,38 +42,52 @@ const indexHtml = `<!DOCTYPE html>
       })
     </script>
     <script type="module">
-      import * as _pkg from './${name}.esm.js'
-      self._pkg = _pkg
-    </script>
-    <script type="module">
       import './tests.js'
       window._mocha = mocha.run()
     </script>
   </html>`
 
-async function buildTests () {
+const tsBundleOptions = {
+  tsconfig: path.join(rootDir, 'tsconfig.json'),
+  outDir: undefined // ignore outDir in tsconfig.json
+}
+
+async function buildTests (testFiles) {
   // create a bundle
+  const input = testFiles ?? [path.join(rootDir, pkgJson.directories.test, '**/*.ts'), path.join(rootDir, pkgJson.directories.src, '**/*.spec.ts')]
   const inputOptions = {
-    input: [path.join(rootDir, pkgJson.directories.test, '**/*.ts'), path.join(rootDir, pkgJson.directories.src, '**/*.spec.ts')],
+    input,
     plugins: [
       multi({ exports: true }),
+      replace({
+        '#pkg': `/${name}.esm.js`,
+        delimiters: ['', ''],
+        preventAssignment: true
+      }),
       replace({
         IS_BROWSER: true,
         preventAssignment: true
       }),
-      typescript(),
+      typescriptPlugin(tsBundleOptions),
       resolve({
         browser: true,
-        exportConditions: ['browser', 'module', 'import', 'default']
+        exportConditions: ['browser', 'default']
       }),
-      commonjs()
+      commonjs(),
+      json()
     ],
-    external: [pkgJson.name]
+    external: [`/${name}.esm.js`]
   }
   const bundle = await rollup.rollup(inputOptions)
   const { output } = await bundle.generate({ format: 'esm' })
   await bundle.close()
-  return output[0].code
+  let bundledCode = output[0].code
+  const replacements = _getEnvVarsReplacements(bundledCode)
+  for (const replacement in replacements) {
+    const regExp = new RegExp(replacement, 'g')
+    bundledCode = bundledCode.replace(regExp, replacements[replacement])
+  }
+  return bundledCode
 }
 
 class TestServer {
@@ -78,11 +95,16 @@ class TestServer {
     this.server = http.createServer()
   }
 
-  async init () {
-    const tests = await buildTests()
+  async init (testFiles) {
+    /** Let us first check if the necessary files are built, and if not, build */
+    if (!fs.existsSync(pkgJson.exports['./esm-browser-bundle'])) {
+      await runScript(path.join(rootDir, 'node_modules', '.bin', 'rollup'), ['-c', 'build/rollup.config.js'])
+    }
+
+    const tests = await buildTests(testFiles)
     this.server.on('request', function (req, res) {
       if (req.url === `/${name}.esm.js`) {
-        fs.readFile(path.join(rootDir, pkgJson.directories.dist, 'bundles/esm.js'), function (err, data) {
+        fs.readFile(path.join(rootDir, pkgJson.exports['./esm-browser-bundle']), function (err, data) {
           if (err) {
             res.writeHead(404)
             res.end(JSON.stringify(err))
@@ -139,6 +161,31 @@ class TestServer {
       this.server.close(error => (error) ? reject(error) : resolve())
     })
   }
+}
+
+function _getEnvVarsReplacements (testsCode) {
+  const replacements = {}
+  const missingEnvVars = []
+  for (const match of testsCode.matchAll(/process\.env\.(\w+)/g)) {
+    const envVar = match[1]
+    if (process.env[envVar] !== undefined) {
+      replacements[match[0]] = '`' + process.env[envVar] + '`'
+    } else {
+      missingEnvVars.push(envVar)
+    }
+  }
+  for (const match of testsCode.matchAll(/process\.env\[['"](\w+)['"]\]/g)) {
+    const envVar = match[1]
+    if (process.env[envVar] !== undefined) {
+      replacements[match[0]] = '`' + process.env[envVar] + '`'
+    } else {
+      missingEnvVars.push(envVar)
+    }
+  }
+  if (missingEnvVars.length > 0) {
+    throw EvalError('The folloinwg environment variables are missing in your .env file: ' + missingEnvVars)
+  }
+  return replacements
 }
 
 exports.server = new TestServer()
