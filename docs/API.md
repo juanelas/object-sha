@@ -25,7 +25,7 @@ then, it JSON.stringify-es it; and finally it hashes it.
 
 **`Throws`**
 
-Thrown if an invalid hash algorithm is selected.
+RangeError if an invalid hash algorithm is selected.
 
 #### Parameters
 
@@ -42,7 +42,7 @@ a promise that resolves to a string with hexadecimal content.
 
 #### Defined in
 
-index.ts:26
+[index.ts:25](https://github.com/juanelas/object-sha/blob/dd2d17a/src/ts/index.ts#L25)
 
 ___
 
@@ -66,4 +66,4 @@ a JSON stringify of the created sorted array
 
 #### Defined in
 
-hashable.ts:32
+[hashable.ts:32](https://github.com/juanelas/object-sha/blob/dd2d17a/src/ts/hashable.ts#L32)

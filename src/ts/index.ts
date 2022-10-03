@@ -18,8 +18,7 @@ export { default as hashable } from './hashable'
   * @param obj - An Object
   * @param algorithm - For compatibility with browsers it should be 'SHA-1', 'SHA-256', 'SHA-384' and 'SHA-512'.
   *
-  * @throws {RangeError}
-  * Thrown if an invalid hash algorithm is selected.
+  * @throws {@link RangeError} if an invalid hash algorithm is selected.
   *
   * @returns a promise that resolves to a string with hexadecimal content.
   */
