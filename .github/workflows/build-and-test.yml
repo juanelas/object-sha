@@ -37,7 +37,7 @@ jobs:
       - name: node tests
         run: npm run test:node
 
-      - if: matrix.node-version == '16.x'
+      - if: matrix.node-version == '18.x'
         name: browser tests
         run: npm run test:browser-headless
 
@@ -57,7 +57,7 @@ jobs:
       - uses: actions/setup-node@v1
         if: steps.check.outputs.changed == 'true'
         with:
-          node-version: 16
+          node-version: 18
           registry-url: https://registry.npmjs.org/
       
       - name: install
