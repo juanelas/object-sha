@@ -1,6 +1,6 @@
 {
   "name": "object-sha",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A package to perform SHA hash functions over arbitrary objects. It creates an array of the obejct values ordered by the object keys, the stringify it and then hash it. The output is given in a hexadecimal string",
   "keywords": [
     "hash",
