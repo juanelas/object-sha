@@ -36,7 +36,7 @@ import * as objectSha from 'object-sha'
 
 The appropriate version for browser or node is automatically exported.
 
-You can also download the [IIFE bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundles/iife.js), the [ESM bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundles/esm.min.js) or the [UMD bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundles/umd.js) and manually add it to your project, or, if you have already installed `object-sha` in your project, just get the bundles from `node_modules/object-sha/dist/bundles/`.
+You can also download the [IIFE bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundle.iife.js), the [ESM bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundle.esm.min.js) or the [UMD bundle](https://raw.githubusercontent.com/juanelas/object-sha/main/dist/bundle.umd.js) and manually add it to your project, or, if you have already installed `object-sha` in your project, just get the bundles from `node_modules/object-sha/dist/bundles/`.
 
 An example of usage could be:
 
